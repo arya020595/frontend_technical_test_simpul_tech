@@ -1,24 +1,31 @@
 import { useState } from 'react'
 import './App.css'
-import Chat from "./Chat";
 import MainContent from "./MainContent";
 import Sidebar from "./Sidebar";
+import Paper from '@mui/material/Paper';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [dataUser, setDataUser] = useState(null);
+
+  const receiveDataFromSidebar = (user) => {
+    setDataUser(user);
+  };
 
   return (
-    <>
-      <div className="app">
-        <header className="app-header">
-          <h1>React Dashboard</h1>
-        </header>
-        <main className="app-main">
-          <Sidebar />
-          <MainContent />
-        </main>
-      </div>
-    </>
+    <Container fixed>
+      <Grid container>
+          <Grid item xs={12}>
+              <Typography variant="h5" className="header-message">Chat</Typography>
+          </Grid>
+      </Grid>
+      <Grid container style={{width: '800px'}} component={Paper}>
+        <Sidebar sendDataToContent={receiveDataFromSidebar} />
+        <MainContent contentData={dataUser} />
+      </Grid>
+    </Container>
   )
 }
 
